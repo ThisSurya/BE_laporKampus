@@ -44,14 +44,32 @@ class ReportingController extends Controller
         return View('ReportView.Form', ['data' => $data]);
     }
 
+    public function voteReport($id)
+    {
+        // $id = decryption($id);
+        $result = $this->reportservice->voteReport($id);
+
+        if($result){
+            return redirect()->route('report.home')->with('message', 'Vote terus ya biar bisa diliat sama petugas!');
+        }else{
+            return redirect()->route('report.home')->with('message', 'kesalahan saat vote');
+        }
+
+    }
+
+    public function unvoteReport($id)
+    {
+        // $id = decryption($id);
+        $result = $this->reportservice->unvoteReport($id);
+        if($result){
+            return redirect()->route('report.home')->with('message', 'Vote terus ya biar bisa diliat sama petugas!');
+        }else{
+            return redirect()->route('report.home')->with('message', 'kesalahan saat vote');
+        }
+    }
+
     public function store(Request $request) : RedirectResponse
     {
-        // $validator = Validator::make($request->all(), [
-        //     'judul' => 'required',
-        //     'keterangan' => 'required',
-        //     'lokasi_id' => 'required',
-        //     'tag_id' => 'required',
-        // ]);
         $validator = Validator::make($request->all(), [
             'judul' => 'required',
             'photo' => 'required',
@@ -59,13 +77,20 @@ class ReportingController extends Controller
             'lokasi_id' => 'required',
             'tag_id' => 'required',
         ]);
+
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $check = $this->reportservice->store($request);
-        // Buat route khusus handle error!!!!
+        $check = $this->reportservice->checksame($request);
+
         if($check){
+            return redirect()->back()->withInput()->with('showsame', 'true');
+        }
+
+        $result = $this->reportservice->store($request);
+        // Buat route khusus handle error!!!!
+        if($result){
             return redirect('/report');
         }else{
             return redirect('/report');

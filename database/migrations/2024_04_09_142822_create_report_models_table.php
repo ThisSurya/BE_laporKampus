@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('photo')->nullable();
             $table->smallInteger('status');
+            $table->integer('vote')->nullable();
             $table->integer('solution_id')->nullable();
             $table->timestamps();
 

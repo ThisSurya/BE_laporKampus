@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Conner\Likeable\Likeable;
 
 class ReportModel extends Model
 {
-    use HasFactory;
+    use HasFactory, Likeable;
     protected $table = 'reports';
 
     protected $fillable = [
@@ -19,5 +20,6 @@ class ReportModel extends Model
         'user_id',
         'solution_id',
         'photo',
+        'vote'
     ];
 }

@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/report/add', [ReportingController::class, 'create'])->name('report.create');
     Route::get('/report/edit/{id}', [ReportingController::class, 'edit'])->name('report.edit');
     Route::post('/report/edit', [ReportingController::class, 'update'])->name('report.update');
+    Route::post('/votereport/{id}', [ReportingController::class, 'voteReport'])->name('report.vote');
+    Route::post('/unvotereport/{id}', [ReportingController::class, 'unvoteReport'])->name('report.unvote');
     Route::post('/report/add', [ReportingController::class, 'store'])->name('report.store');
 });
 

@@ -15,7 +15,11 @@
                                 <p class="font-medium text-lg">Personal Details</p>
                                 <p>Please fill out all the fields.</p>
                                 <div class="lg:flex justify-center items-center h-full hidden">
-                                    <p>Tambah</p>
+                                    @if (session()->has('showsame'))
+                                        <p>{{ session('showsame') }}</p>
+                                    @else
+                                        <p>Tambah</p>
+                                    @endif
                                 </div>
                             </div>
 
